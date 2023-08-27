@@ -1,0 +1,8 @@
+version: 2
+discovery:
+  allowedHostnames:
+    - localhost
+    - amex-india.partner.emeritus.org
+    - images.ctfassets.net
+    
+

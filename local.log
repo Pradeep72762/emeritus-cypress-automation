@@ -1,0 +1,12 @@
+"" 
+
+Sun Aug 27 2023 13:04:08:90 GMT+0530 (India Standard Time) -- [WARNING] Discovered proxy settings in your environment. Use the --pac-file argument to specify the absolute path to your PAC file. For more proxy options, refer to the Local Testing documentation  (https://www.browserstack.com/local-testing/binary-params).
+
+Sun Aug 27 2023 13:04:08:90 GMT+0530 (India Standard Time) -- You can disable this warning by using the --disable-proxy-discovery argument while using the Local binary.
+
+Sun Aug 27 2023 13:04:11:669 GMT+0530 (India Standard Time) -- [SUCCESS] You can now access your local server(s) in our remote browser
+
+Sun Aug 27 2023 13:04:12:298 GMT+0530 (India Standard Time) -- Starting configuration console on http://localhost:45454
+Sun Aug 27 2023 13:04:13:814 GMT+0530 (India Standard Time) -- Press Ctrl-C to exit
+
+
