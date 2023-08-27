@@ -67,7 +67,10 @@ jobs:
           if [[ "${{ github.event.action }}" == "create-pr-RunCyPercyTests_IN" ]]; then
             browserstack-cypress run -s 'cypress/e2e/specs/regression-specs/staging/**/*.cy.js'
           else
-            browserstack-cypress run -s "cypress/e2e/specs/${{ github.event.inputs.feature }}${{ github.event.inputs.testcases }}"
+            if [[ "${{ github.event.inputs.geolocation }}" != "none" ]]; then
+              browserstack-cypress run -s --geolocation {{ github.event.inputs.geolocation }} --local false "cypress/e2e/specs/${{ github.event.inputs.feature }}${{ github.event.inputs.testcases }}"
+            else
+              browserstack-cypress run -s "cypress/e2e/specs/${{ github.event.inputs.feature }}${{ github.event.inputs.testcases }}"
           fi
 
       - name: Stop Percy Server
