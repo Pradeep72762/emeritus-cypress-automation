@@ -68,7 +68,7 @@ jobs:
             browserstack-cypress run -s 'cypress/e2e/specs/regression-specs/staging/**/*.cy.js'
           else
             if [[ "${{ github.event.inputs.geolocation }}" != "none" ]]; then
-              browserstack-cypress run -s --geolocation {{ github.event.inputs.geolocation }} --local false "cypress/e2e/specs/${{ github.event.inputs.feature }}${{ github.event.inputs.testcases }}"
+              browserstack-cypress run -s --geolocation ${{ github.event.inputs.geolocation }} --local false "cypress/e2e/specs/${{ github.event.inputs.feature }}${{ github.event.inputs.testcases }}"
             else
               browserstack-cypress run -s "cypress/e2e/specs/${{ github.event.inputs.feature }}${{ github.event.inputs.testcases }}"
             fi
