@@ -14,7 +14,7 @@ on:
         default: '/*.cy.js'
       geolocation:
         description: 'specify geolocation' 
-        default: 'GB'
+        default: 'none'
   repository_dispatch:
     types: [create-pr-RunCyPercyTests_IN]
 
@@ -59,7 +59,10 @@ jobs:
         env:
           PERCY_TOKEN: "d3f4debd655552e28353ccc055ba61efd3d63f1d412222f210b49b4cbbb3ae77"
           PERCY_BRANCH: "TestBranch"
-        run: yarn percy exec:start &      
+        run: |
+          if [[ "${{ github.event.inputs.geolocation }}" != "none" ]]; then
+            yarn percy exec:start &
+          fi
         
       
       - name: Run BrowserStack Tests
