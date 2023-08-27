@@ -13,7 +13,7 @@ on:
         description: 'specify test cases' 
         default: '/*.cy.js'
       geolocation:
-        description: 'specify geolocation' 
+        description: 'specify Geolocation: triggers only Cypress functional tests; triggers both Cypress and Percy tests if geolocation specified."' 
         default: 'none'
   repository_dispatch:
     types: [create-pr-RunCyPercyTests_IN]
