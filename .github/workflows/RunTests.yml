@@ -1,4 +1,4 @@
-name: 'RunCyPercyTests_IN'
+name: 'RunCypressPercyTests'
 on: 
   pull_request:    
     branches:
