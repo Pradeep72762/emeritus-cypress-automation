@@ -14,6 +14,7 @@ on:
         default: '/*.cy.js'
       geolocation:
         description: |
+          geolocation
           1) Triggers only Cypress functional tests when specified
           2) Triggers both Cypress and Percy tests if not specified (none)
         default: 'none'
