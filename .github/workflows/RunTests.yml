@@ -14,7 +14,6 @@ on:
         default: '/*.cy.js'
       geolocation:
         description: 'specify geolocation' 
-        default: 'none'
         choices: ["IN", "FR", "VN", "GB"]
   repository_dispatch:
     types: [create-pr-RunCyPercyTests_IN]
