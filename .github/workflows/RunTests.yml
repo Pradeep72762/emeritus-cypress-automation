@@ -60,7 +60,7 @@ jobs:
           PERCY_TOKEN: "d3f4debd655552e28353ccc055ba61efd3d63f1d412222f210b49b4cbbb3ae77"
           PERCY_BRANCH: "TestBranch"
         run: |
-          if [[ "${{ github.event.inputs.geolocation }}" != "none" ]]; then
+          if [[ "${{ github.event.inputs.geolocation }}" == "none" ]]; then
             yarn percy exec:start &
           fi
         
@@ -78,7 +78,9 @@ jobs:
           fi
 
       - name: Stop Percy Server
-        run: yarn percy exec:stop
-        if: ${{ always() }}
+        run: |
+          if [[ "${{ github.event.inputs.geolocation }}" == "none" ]]; then
+            yarn percy exec:stop
+            if: ${{ always() }}
       
         
