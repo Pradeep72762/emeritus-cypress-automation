@@ -23,8 +23,8 @@ jobs:
       - name: 'BrowserStack Env Setup'  # Invokes the setup-env action
         uses: browserstack/github-actions/setup-env@master
         with:
-          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
-          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          username:  "pradeepsinghshek_nu0i2w"
+          access-key: "hpDTkMH3PQPryqyho8UQ"
 
       - name: 'BrowserStack Local Tunnel Setup'  # Invokes the setup-local action
         uses: browserstack/github-actions/setup-local@master
@@ -46,7 +46,7 @@ jobs:
         
       - name: Run BrowserStack executable
         run: |
-          ./BrowserStackLocal --key ${{ secrets.BROWSERSTACK_ACCESS_KEY }} --force-local &
+          ./BrowserStackLocal --key "hpDTkMH3PQPryqyho8UQ" --force-local &
           
       - name: 'Building web application to be tested'
         run: yarn 
@@ -56,8 +56,8 @@ jobs:
         
       - name: 'start percy server'
         env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-          PERCY_BRANCH: ${{ vars.PERCY_BRANCH }}
+          PERCY_TOKEN: "d3f4debd655552e28353ccc055ba61efd3d63f1d412222f210b49b4cbbb3ae77"
+          PERCY_BRANCH: "TestBranch"
         run: yarn percy exec:start &      
         
       
