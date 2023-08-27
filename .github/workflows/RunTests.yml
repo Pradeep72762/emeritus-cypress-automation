@@ -35,7 +35,7 @@ jobs:
       - name: 'Checkout the repository'
         uses: actions/checkout@v2
         with:
-          ref: PercyTest
+          ref: main
           
       - name: 'git branch info'
         run: | 
