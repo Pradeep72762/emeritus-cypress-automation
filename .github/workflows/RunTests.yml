@@ -15,7 +15,7 @@ on:
       geolocation:
         description: |
           geolocation
-          1) Triggers only Cypress functional tests when specified
+          1) Triggers only Cypress functional tests when specified, e.g., 'FR', 'VN', 'IN, etc.
           2) Triggers both Cypress and Percy tests if not specified (none)
         default: 'none'
   repository_dispatch:
