@@ -55,7 +55,7 @@ jobs:
       - name: 'install browserstack cli'
         run: yarn global add browserstack-cypress-cli    
         
-      - name: 'start percy server'
+      - name: 'start percy server if geolocation is not specified'
         env:
           PERCY_TOKEN: "d3f4debd655552e28353ccc055ba61efd3d63f1d412222f210b49b4cbbb3ae77"
           PERCY_BRANCH: "TestBranch"
@@ -77,10 +77,9 @@ jobs:
             fi
           fi
 
-      - name: Stop Percy Server
+      - name: Stop Percy Server if running
         run: |
           if [[ "${{ github.event.inputs.geolocation }}" == "none" ]]; then
             yarn percy exec:stop
-            if: ${{ always() }}
       
         
