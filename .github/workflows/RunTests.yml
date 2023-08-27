@@ -15,7 +15,7 @@ on:
       geolocation:
         description: 'specify geolocation' 
         default: 'none'
-        options:         
+        options:
           France: FR
           United Kingdom: GB
           India: IN
