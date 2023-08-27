@@ -82,5 +82,6 @@ jobs:
           if [[ "${{ github.event.inputs.geolocation }}" == "none" ]]; then
             yarn percy exec:stop
           fi
+        if: always()
       
         
