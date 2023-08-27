@@ -15,10 +15,7 @@ on:
       geolocation:
         description: 'specify geolocation' 
         default: 'none'
-        options:
-          France: FR
-          United Kingdom: GB
-          India: IN
+        choices: ["IN", "FR", "VN", "GB"]
   repository_dispatch:
     types: [create-pr-RunCyPercyTests_IN]
 
