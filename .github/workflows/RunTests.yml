@@ -1,4 +1,4 @@
-name: 'RunCyPercyTests_IN'
+name: 'RunCypressPercyTests'
 on: 
   pull_request:    
     branches:
@@ -12,6 +12,9 @@ on:
       testcases:
         description: 'specify test cases' 
         default: '/*.cy.js'
+      geolocation:
+        description: 'specify geolocation' 
+        default: 'none'
   repository_dispatch:
     types: [create-pr-RunCyPercyTests_IN]
 
@@ -34,8 +37,6 @@ jobs:
     
       - name: 'Checkout the repository'
         uses: actions/checkout@v2
-        with:
-          ref: TestBranch
           
       - name: 'git branch info'
         run: | 
@@ -54,11 +55,14 @@ jobs:
       - name: 'install browserstack cli'
         run: yarn global add browserstack-cypress-cli    
         
-      - name: 'start percy server'
+      - name: 'start percy server if geolocation is not specified'
         env:
           PERCY_TOKEN: "d3f4debd655552e28353ccc055ba61efd3d63f1d412222f210b49b4cbbb3ae77"
           PERCY_BRANCH: "TestBranch"
-        run: yarn percy exec:start &      
+        run: |
+          if [[ "${{ github.event.inputs.geolocation }}" == "none" ]]; then
+            yarn percy exec:start &
+          fi
         
       
       - name: Run BrowserStack Tests
@@ -66,11 +70,16 @@ jobs:
           if [[ "${{ github.event.action }}" == "create-pr-RunCyPercyTests_IN" ]]; then
             browserstack-cypress run -s 'cypress/e2e/specs/regression-specs/staging/**/*.cy.js'
           else
-            browserstack-cypress run -s "cypress/e2e/specs/${{ github.event.inputs.feature }}${{ github.event.inputs.testcases }}"
+            if [[ "${{ github.event.inputs.geolocation }}" != "none" ]]; then
+              browserstack-cypress run -s --geolocation ${{ github.event.inputs.geolocation }} --local false -s "cypress/e2e/specs/${{ github.event.inputs.feature }}${{ github.event.inputs.testcases }}"
+            else
+              browserstack-cypress run -s "cypress/e2e/specs/${{ github.event.inputs.feature }}${{ github.event.inputs.testcases }}"
+            fi
           fi
 
-      - name: Stop Percy Server
-        run: yarn percy exec:stop
-        if: ${{ always() }}
+      - name: Stop Percy Server if running
+        run: |
+          if [[ "${{ github.event.inputs.geolocation }}" == "none" ]]; then
+            yarn percy exec:stop
       
         
