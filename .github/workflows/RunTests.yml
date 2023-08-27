@@ -12,6 +12,9 @@ on:
       testcases:
         description: 'specify test cases' 
         default: '/*.cy.js'
+      geolocation:
+        description: 'specify geolocation' 
+        default: 'none'
   repository_dispatch:
     types: [create-pr-RunCyPercyTests_IN]
 
