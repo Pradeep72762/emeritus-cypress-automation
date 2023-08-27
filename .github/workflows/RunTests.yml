@@ -1,0 +1,76 @@
+name: 'RunCyPercyTests_IN'
+on: 
+  pull_request:    
+    branches:
+      - main
+    types: [opened]
+  workflow_dispatch:
+    inputs:    
+      feature:
+        description: 'feature to be tested' 
+        default: 'regression-specs/staging/**'
+      testcases:
+        description: 'specify test cases' 
+        default: '/*.cy.js'
+  repository_dispatch:
+    types: [create-pr-RunCyPercyTests_IN]
+
+jobs:  
+ ubuntu-job:
+    name: 'BrowserStack Test on Ubuntu'
+    runs-on: ubuntu-latest  # Can be self-hosted runner also
+    steps:
+      - name: 'BrowserStack Env Setup'  # Invokes the setup-env action
+        uses: browserstack/github-actions/setup-env@master
+        with:
+          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
+          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: 'BrowserStack Local Tunnel Setup'  # Invokes the setup-local action
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: start
+          local-identifier: random
+    
+      - name: 'Checkout the repository'
+        uses: actions/checkout@v2
+        with:
+          ref: PercyTest
+          
+      - name: 'git branch info'
+        run: | 
+          git branch
+        
+      - name: Extract BrowserStack ZIP file
+        run: unzip BrowserStackLocal-linux-x64.zip      
+        
+      - name: Run BrowserStack executable
+        run: |
+          ./BrowserStackLocal --key ${{ secrets.BROWSERSTACK_ACCESS_KEY }} --force-local &
+          
+      - name: 'Building web application to be tested'
+        run: yarn 
+        
+      - name: 'install browserstack cli'
+        run: yarn global add browserstack-cypress-cli    
+        
+      - name: 'start percy server'
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          PERCY_BRANCH: ${{ vars.PERCY_BRANCH }}
+        run: yarn percy exec:start &      
+        
+      
+      - name: Run BrowserStack Tests
+        run: |
+          if [[ "${{ github.event.action }}" == "create-pr-RunCyPercyTests_IN" ]]; then
+            browserstack-cypress run -s 'cypress/e2e/specs/regression-specs/staging/**/*.cy.js'
+          else
+            browserstack-cypress run -s "cypress/e2e/specs/${{ github.event.inputs.feature }}${{ github.event.inputs.testcases }}"
+          fi
+
+      - name: Stop Percy Server
+        run: yarn percy exec:stop
+        if: ${{ always() }}
+      
+        
